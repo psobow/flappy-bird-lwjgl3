@@ -1,11 +1,13 @@
 package sobow.flappy.bird;
 
 import sobow.flappy.bird.graphics.Shader;
+import sobow.flappy.bird.graphics.Texture;
 import sobow.flappy.bird.graphics.VertexArray;
 
 public class Level
 {
     private VertexArray background;
+    private Texture bgTexture;
 
     public Level()
     {
@@ -28,12 +30,17 @@ public class Level
         };
 
         background = new VertexArray(vertices, indices, tcs);
+        bgTexture = new Texture("res/bg.jpeg");
     }
 
     public void render()
     {
+        bgTexture.bind();
+
         Shader.background.enable();
         background.render();
         Shader.background.disable();
+
+        bgTexture.unbind();
     }
 }

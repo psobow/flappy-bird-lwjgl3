@@ -25,9 +25,13 @@ import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.GL_NO_ERROR;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glEnable;
 import static org.lwjgl.opengl.GL11.glGetError;
+import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -135,9 +139,14 @@ public class FlappyBirdGame
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
+        glEnable(GL_DEPTH_TEST);
+
+        glActiveTexture(GL_TEXTURE1);
 
         Shader.loadAll();
+
         Shader.background.enable();
+
         Matrix4f pr_matrix = Matrix4f.orthopgrahic(-10.0f,
                                                    10.0f,
                                                    -10.0f * 9.0f / 16.0f,
@@ -145,7 +154,10 @@ public class FlappyBirdGame
                                                    -1.0f,
                                                    1.0f);
         Shader.background.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.background.setUniform1f("tex", 1);
+
         Shader.background.disable();
+
         level = new Level();
 
     }
