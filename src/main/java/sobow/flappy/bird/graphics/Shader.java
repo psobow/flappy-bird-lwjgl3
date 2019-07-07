@@ -9,6 +9,9 @@ import sobow.flappy.bird.utils.ShaderUtils;
 
 public class Shader
 {
+    public static final int VERTEX = 0;
+    public static final int TEXTURE_CORDINATE = 0;
+
     private final int ID;
     private Map<String, Integer> locationCache = new HashMap<>();
 
