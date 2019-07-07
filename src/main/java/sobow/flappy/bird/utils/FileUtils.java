@@ -18,7 +18,7 @@ public class FileUtils
             String buffer;
             while ((buffer = reader.readLine()) != null)
             {
-                stringBuilder.append(buffer);
+                stringBuilder.append(buffer + '\n');
             }
         }
         catch (FileNotFoundException e)

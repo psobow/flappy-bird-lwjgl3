@@ -25,7 +25,9 @@ import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_NO_ERROR;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glGetError;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -34,6 +36,8 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
+import sobow.flappy.bird.graphics.Shader;
+import sobow.flappy.bird.math.Matrix4f;
 
 public class FlappyBirdGame
 {
@@ -43,6 +47,7 @@ public class FlappyBirdGame
     private Thread thread;
     private boolean running;
     private long window;
+    private Level level;
 
     public void start()
     {
@@ -123,6 +128,26 @@ public class FlappyBirdGame
         glfwSwapInterval(1);
         // Make the window visible
         glfwShowWindow(window);
+
+        // This line is critical for LWJGL's interoperation with GLFW's
+        // OpenGL context, or any context that is managed externally.
+        // LWJGL detects the context that is current in the current thread,
+        // creates the GLCapabilities instance and makes the OpenGL
+        // bindings available for use.
+        GL.createCapabilities();
+
+        Shader.loadAll();
+        Shader.background.enable();
+        Matrix4f pr_matrix = Matrix4f.orthopgrahic(-10.0f,
+                                                   10.0f,
+                                                   -10.0f * 9.0f / 16.0f,
+                                                   10.0f * 9.0f / 16.0f,
+                                                   -1.0f,
+                                                   1.0f);
+        Shader.background.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.background.disable();
+        level = new Level();
+
     }
 
     private void update()
@@ -136,14 +161,15 @@ public class FlappyBirdGame
 
     private void render()
     {
-        // This line is critical for LWJGL's interoperation with GLFW's
-        // OpenGL context, or any context that is managed externally.
-        // LWJGL detects the context that is current in the current thread,
-        // creates the GLCapabilities instance and makes the OpenGL
-        // bindings available for use.
-        GL.createCapabilities();
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+        level.render();
+
+        int error = glGetError();
+        if (error != GL_NO_ERROR)
+        {
+            System.out.println(error);
+        }
+
         glfwSwapBuffers(window); // swap the color buffers
     }
 }
