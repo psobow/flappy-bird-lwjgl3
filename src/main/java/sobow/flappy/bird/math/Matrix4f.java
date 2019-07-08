@@ -5,7 +5,8 @@ import sobow.flappy.bird.utils.BufferUtils;
 
 public class Matrix4f
 {
-    public float[] elements = new float[4 * 4];
+    public static final int SIZE = 4 * 4;
+    public float[] elements = new float[SIZE];
 
     private Matrix4f()
     {
@@ -15,14 +16,19 @@ public class Matrix4f
     {
         Matrix4f result = new Matrix4f();
 
+        for (int i = 0; i < SIZE; i++)
+        {
+            result.elements[i] = 0.0f;
+        }
+
         result.elements[0 + 0 * 4] = 1.0f;
         result.elements[1 + 1 * 4] = 1.0f;
         result.elements[2 + 2 * 4] = 1.0f;
-        result.elements[3 + 3 * 3] = 1.0f;
+        result.elements[3 + 3 * 4] = 1.0f;
         return result;
     }
 
-    public static Matrix4f orthopgrahic(float left, float right, float bottom, float top, float near, float far)
+    public static Matrix4f orthographic(float left, float right, float bottom, float top, float near, float far)
     {
         Matrix4f result = identity();
         result.elements[0 + 0 * 4] = 2.0f / (right - left);

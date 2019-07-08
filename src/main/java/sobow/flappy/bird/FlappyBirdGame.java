@@ -63,11 +63,33 @@ public class FlappyBirdGame
     private Runnable r = () ->
     {
         init();
+        long lastTime = System.nanoTime();
+        double ns = 1_000_000_000.0 / 60.0;
+        double delta = 0.0;
+        int updates = 0;
+        int frames = 0;
+        long timer = System.currentTimeMillis();
+
         while (running)
         {
-            update();
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            if (delta >= 1.0)
+            {
+                update();
+                updates++;
+                delta--;
+            }
             render();
-
+            frames++;
+            if (System.currentTimeMillis() - timer > 1000)
+            {
+                timer += 1000;
+                System.out.println(updates + " ups, " + frames + " fps");
+                updates = 0;
+                frames = 0;
+            }
             if (glfwWindowShouldClose(window))
             {
                 running = false;
@@ -145,18 +167,19 @@ public class FlappyBirdGame
 
         Shader.loadAll();
 
-        Shader.background.enable();
-
-        Matrix4f pr_matrix = Matrix4f.orthopgrahic(-10.0f,
+        Matrix4f pr_matrix = Matrix4f.orthographic(-10.0f,
                                                    10.0f,
                                                    -10.0f * 9.0f / 16.0f,
                                                    10.0f * 9.0f / 16.0f,
                                                    -1.0f,
                                                    1.0f);
-        Shader.background.setUniformMat4f("pr_matrix", pr_matrix);
-        Shader.background.setUniform1f("tex", 1);
 
-        Shader.background.disable();
+        Shader.BG.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.BG.setUniform1i("tex", 1);
+
+        Shader.BIRD.setUniformMat4f("pr_matrix", pr_matrix);
+        Shader.BIRD.setUniform1i("tex", 1);
+
 
         level = new Level();
 
@@ -169,6 +192,7 @@ public class FlappyBirdGame
         {
             System.out.println("DZIAP!");
         }
+        level.update();
     }
 
     private void render()

@@ -11,4 +11,5 @@ public class Vector3f
         this.z = z;
     }
 
+    public Vector3f() {}
 }

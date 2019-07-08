@@ -9,12 +9,13 @@ import sobow.flappy.bird.utils.ShaderUtils;
 
 public class Shader
 {
-    public static final int VERTEX = 0;
-    public static final int TEXTURE_CORDINATE = 1;
+    public static final int VERTEX_ATTRIB = 0;
+    public static final int TCOORD_ATTRIB = 1;
 
-    public static Shader background;
+    public static Shader BG, BIRD;
 
     private boolean enabled = false;
+
 
     private final int ID;
     private Map<String, Integer> locationCache = new HashMap<>();
@@ -26,7 +27,8 @@ public class Shader
 
     public static void loadAll()
     {
-        background = new Shader("shaders/bg.vert", "shaders/bg.frag");
+        BG = new Shader("shaders/bg.vert", "shaders/bg.frag");
+        BIRD = new Shader("shaders/bird.vert", "shaders/bird.frag");
     }
 
     public int getUniform(String name)
