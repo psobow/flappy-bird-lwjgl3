@@ -21,4 +21,10 @@ public class Input extends GLFWKeyCallback
             glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
         }
     }
+
+    public static boolean isKeyDown(int keyCode)
+    {
+        return keys[keyCode];
+    }
+
 }

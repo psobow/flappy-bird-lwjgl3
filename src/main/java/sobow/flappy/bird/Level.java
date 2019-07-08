@@ -49,6 +49,7 @@ public class Level
         bird.update();
     }
 
+
     public void render()
     {
         bgTexture.bind();

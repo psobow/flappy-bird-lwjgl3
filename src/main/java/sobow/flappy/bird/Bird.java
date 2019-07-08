@@ -1,6 +1,7 @@
 package sobow.flappy.bird;
 
-import org.lwjgl.glfw.GLFW;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
+
 import sobow.flappy.bird.graphics.Shader;
 import sobow.flappy.bird.graphics.Texture;
 import sobow.flappy.bird.graphics.VertexArray;
@@ -43,14 +44,20 @@ public class Bird
 
     public void update()
     {
-        if (Input.keys[GLFW.GLFW_KEY_UP])
+        position.y -= delta;
+        if (Input.isKeyDown(GLFW_KEY_SPACE))
         {
-            position.y += 0.1f;
+            delta = -0.15f;
         }
-        if (Input.keys[GLFW.GLFW_KEY_DOWN])
+        else
         {
-            position.y -= 0.1f;
+            delta += 0.01f;
         }
+    }
+
+    private void fall()
+    {
+
     }
 
     public void render()

@@ -2,7 +2,6 @@ package sobow.flappy.bird;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
 import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
@@ -188,10 +187,6 @@ public class FlappyBirdGame
     private void update()
     {
         glfwPollEvents();
-        if (Input.keys[GLFW_KEY_SPACE])
-        {
-            System.out.println("DZIAP!");
-        }
         level.update();
     }
 
