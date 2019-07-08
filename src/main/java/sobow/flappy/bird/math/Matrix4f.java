@@ -61,36 +61,27 @@ public class Matrix4f
 
         result.elements[0 + 0 * 4] = cos;
         result.elements[1 + 0 * 4] = sin;
+
         result.elements[0 + 1 * 4] = -sin;
         result.elements[1 + 1 * 4] = cos;
 
         return result;
     }
 
-    public Matrix4f multiply(Matrix4f matrix4f)
+
+    public Matrix4f multiply(Matrix4f matrix)
     {
         Matrix4f result = new Matrix4f();
-        for (int row = 0; row < 4; row++)
+        for (int y = 0; y < 4; y++)
         {
-            for (int column = 0; column < 4; column++)
+            for (int x = 0; x < 4; x++)
             {
                 float sum = 0.0f;
-                for (int i = 0; i < 4; i++)
+                for (int e = 0; e < 4; e++)
                 {
-                    sum += elements[column + i * 4] * matrix4f.elements[i + row * 4];
+                    sum += this.elements[x + e * 4] * matrix.elements[e + y * 4];
                 }
-                /*
-                    0  1  2  3
-                    4  5  6  7
-                    8  9  10 11
-                    12 13 14 15
-                indecies from first iteration
-                0 * 0
-                4 * 1
-                8 * 2
-                12 * 3
-                */
-                result.elements[row + column * 4] = sum;
+                result.elements[x + y * 4] = sum;
             }
         }
         return result;
