@@ -193,6 +193,10 @@ public class FlappyBirdGame
     {
         glfwPollEvents();
         level.update();
+        if (Level.isGameOver())
+        {
+            level = new Level();
+        }
     }
 
     private void render()

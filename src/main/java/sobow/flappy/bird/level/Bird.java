@@ -91,10 +91,4 @@ public class Bird
         return SIZE;
     }
 
-    public void resetBird()
-    {
-        delta = 0.0f;
-        position.y = 0.0f;
-        rot = 0.0f;
-    }
 }

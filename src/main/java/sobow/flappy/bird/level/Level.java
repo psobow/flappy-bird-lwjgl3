@@ -1,5 +1,6 @@
 package sobow.flappy.bird.level;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
 import java.util.Random;
@@ -20,13 +21,19 @@ public class Level
     private Pipe[] pipes = new Pipe[5 * 2];
     private int index = 0;
     private Random random = new Random();
-    private float OFFSET = 10.0f;
+    private float OFFSET = 8.0f;
 
     private static boolean playerInControl = true;
     private static boolean playerStartedGame = false;
+    private static boolean gameOver = false;
 
     public Level()
     {
+        // reset these values after creation new level
+        playerInControl = true;
+        playerStartedGame = false;
+        gameOver = false;
+
         float[] vertices = new float[]{
                 -10.0f, -10.0f * 9.0f / 16.0f, 0.0f,
 
@@ -54,7 +61,12 @@ public class Level
     private void createPipes()
     {
         Pipe.create();
-        resetPipes();
+        for (int i = 0; i < 5 * 2; i += 2)
+        {
+            pipes[i] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
+            pipes[i + 1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 12.0f);
+            index += 2;
+        }
     }
 
     public void update()
@@ -80,6 +92,11 @@ public class Level
             {
                 playerInControl = false;
                 bird.fall();
+            }
+
+            if (playerInControl == false && Input.isKeyDown(GLFW_KEY_ENTER))
+            {
+                gameOver = true;
             }
 
         }
@@ -169,14 +186,9 @@ public class Level
         Pipe.getTexture().unbind();
     }
 
-    private void resetPipes()
+    public static boolean isGameOver()
     {
-        for (int i = 0; i < 5 * 2; i += 2)
-        {
-            pipes[i] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
-            pipes[i + 1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 12.0f);
-            index += 2;
-        }
+        return gameOver;
     }
 
     public static boolean getPlayerInControl()
