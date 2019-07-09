@@ -40,6 +40,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 import sobow.flappy.bird.graphics.Shader;
+import sobow.flappy.bird.level.Level;
 import sobow.flappy.bird.math.Matrix4f;
 
 public class FlappyBirdGame

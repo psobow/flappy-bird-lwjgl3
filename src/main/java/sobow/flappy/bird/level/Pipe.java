@@ -1,4 +1,4 @@
-package sobow.flappy.bird;
+package sobow.flappy.bird.level;
 
 import sobow.flappy.bird.graphics.Texture;
 import sobow.flappy.bird.graphics.VertexArray;

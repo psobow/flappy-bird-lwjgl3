@@ -1,7 +1,8 @@
-package sobow.flappy.bird;
+package sobow.flappy.bird.level;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
+import sobow.flappy.bird.Input;
 import sobow.flappy.bird.graphics.Shader;
 import sobow.flappy.bird.graphics.Texture;
 import sobow.flappy.bird.graphics.VertexArray;
