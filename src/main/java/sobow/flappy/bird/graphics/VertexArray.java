@@ -3,7 +3,6 @@ package sobow.flappy.bird.graphics;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE;
-import static org.lwjgl.opengl.GL11.glDrawArrays;
 import static org.lwjgl.opengl.GL11.glDrawElements;
 import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
@@ -55,32 +54,19 @@ public class VertexArray
     public void bind()
     {
         glBindVertexArray(vao);
-        if (ibo > 0)
-        {
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-        }
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
     }
 
     public void unbind()
     {
-        if (ibo > 0)
-        {
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        }
-
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
 
     public void draw()
     {
-        if (ibo > 0)
-        {
-            glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_BYTE, 0);
-        }
-        else
-        {
-            glDrawArrays(GL_TRIANGLES, 0, count);
-        }
+
+        glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_BYTE, 0);
     }
 
     public void render()
