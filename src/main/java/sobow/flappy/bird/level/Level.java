@@ -153,6 +153,7 @@ public class Level
     private void renderPipes()
     {
         Shader.PIPE.enable();
+        Shader.PIPE.setUniform2f("bird", bird.getX(), bird.getY());
         Shader.PIPE.setUniformMat4f("vw_matrix", Matrix4f.translate(new Vector3f(xScroll * 0.05f, 0.0f, 0.0f)));
         Pipe.getTexture().bind();
         Pipe.getMesh().bind();
