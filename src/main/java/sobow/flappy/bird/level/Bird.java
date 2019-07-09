@@ -60,13 +60,6 @@ public class Bird
         {
             delta += 0.01f;
         }
-
-
-    }
-
-    public void fall()
-    {
-        delta = 0.02f;
     }
 
     public void render()
@@ -76,6 +69,11 @@ public class Bird
         texture.bind();
         mesh.render();
         Shader.BIRD.disable();
+    }
+
+    public void fall()
+    {
+        delta = 0.02f;
     }
 
     public float getY()
