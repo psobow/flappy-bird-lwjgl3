@@ -17,6 +17,7 @@ public class Level
     private Pipe[] pipes = new Pipe[5 * 2];
     private int index = 0;
     private Random random = new Random();
+    private float OFFSET = 5.0f;
 
     public Level()
     {
@@ -97,7 +98,7 @@ public class Level
         Pipe.create();
         for (int i = 0; i < 5 * 2; i += 2)
         {
-            pipes[i] = new Pipe(index * 3.0f, random.nextFloat() * 4.0f);
+            pipes[i] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
             pipes[i + 1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 11.0f);
             index += 2;
         }
