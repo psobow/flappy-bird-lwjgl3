@@ -1,11 +1,14 @@
 package sobow.flappy.bird.level;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
+
 import java.util.Random;
 import sobow.flappy.bird.graphics.Shader;
 import sobow.flappy.bird.graphics.Texture;
 import sobow.flappy.bird.graphics.VertexArray;
 import sobow.flappy.bird.math.Matrix4f;
 import sobow.flappy.bird.math.Vector3f;
+import sobow.flappy.bird.utils.Input;
 
 public class Level
 {
@@ -17,7 +20,10 @@ public class Level
     private Pipe[] pipes = new Pipe[5 * 2];
     private int index = 0;
     private Random random = new Random();
-    private float OFFSET = 5.0f;
+    private float OFFSET = 10.0f;
+
+    private static boolean playerInControl = true;
+    private static boolean playerStartedGame = false;
 
     public Level()
     {
@@ -47,23 +53,35 @@ public class Level
 
     public void update()
     {
-        xScroll--;
-        if (-xScroll % 335 == 0)
+        if (playerStartedGame)
         {
-            map++;
-        }
-        if (-xScroll > 250 && -xScroll % 120 == 0)
-        {
-            updatePipes();
-        }
-        bird.update();
+            if (playerInControl)
+            {
+                xScroll--;
+                if (-xScroll % 335 == 0)
+                {
+                    map++;
+                }
+                if (-xScroll > 400 && -xScroll % 120 == 0)
+                {
+                    updatePipes();
+                }
+            }
 
-        if (collision())
+            bird.update();
+
+            if (playerInControl && collisionWithPipes()) // action if collisionWithPipes occured
+            {
+                playerInControl = false;
+                bird.fall();
+            }
+
+        }
+        else // Wait with rendering till player press space bar for first time
         {
-            System.out.println("Collision with pipes!");
+            playerStartedGame = Input.isKeyDown(GLFW_KEY_SPACE);
         }
     }
-
 
     public void render()
     {
@@ -105,10 +123,15 @@ public class Level
     private void createPipes()
     {
         Pipe.create();
+        resetPipes();
+    }
+
+    private void resetPipes()
+    {
         for (int i = 0; i < 5 * 2; i += 2)
         {
             pipes[i] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
-            pipes[i + 1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 11.5f);
+            pipes[i + 1] = new Pipe(pipes[i].getX(), pipes[i].getY() - 12.0f);
             index += 2;
         }
     }
@@ -116,11 +139,11 @@ public class Level
     private void updatePipes()
     {
         pipes[index % 10] = new Pipe(OFFSET + index * 3.0f, random.nextFloat() * 4.0f);
-        pipes[(index + 1) % 10] = new Pipe(pipes[index % 10].getX(), pipes[index % 10].getY() - 11.5f);
+        pipes[(index + 1) % 10] = new Pipe(pipes[index % 10].getX(), pipes[index % 10].getY() - 12.0f);
         index += 2;
     }
 
-    private boolean collision()
+    private boolean collisionWithPipes()
     {
         for (int i = 0; i < 5 * 2; i++)
         {
@@ -152,6 +175,11 @@ public class Level
         }
 
         return false;
+    }
+
+    public static boolean getPlayerInControl()
+    {
+        return playerInControl;
     }
 
 }

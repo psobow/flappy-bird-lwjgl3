@@ -45,8 +45,14 @@ public class Bird
 
     public void update()
     {
-        position.y -= delta;
-        if (Input.isKeyDown(GLFW_KEY_SPACE))
+        // modify bird Y position only if he is located between top and bottom of the window
+        if (position.y - delta > -5.0f && position.y - delta < 5.0f)
+        {
+            rot = -delta * 90.0f;
+            position.y -= delta;
+        }
+
+        if (Input.isKeyDown(GLFW_KEY_SPACE) && Level.getPlayerInControl())
         {
             delta = -0.15f;
         }
@@ -55,12 +61,12 @@ public class Bird
             delta += 0.01f;
         }
 
-        rot = -delta * 90.0f;
+
     }
 
-    private void fall()
+    public void fall()
     {
-
+        delta = 0.02f;
     }
 
     public void render()
@@ -80,5 +86,12 @@ public class Bird
     public float getSize()
     {
         return SIZE;
+    }
+
+    public void resetBird()
+    {
+        delta = 0.0f;
+        position.y = 0.0f;
+        rot = 0.0f;
     }
 }
