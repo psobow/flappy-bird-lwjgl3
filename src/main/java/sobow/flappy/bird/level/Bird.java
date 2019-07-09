@@ -81,6 +81,11 @@ public class Bird
         return position.y;
     }
 
+    public float getX()
+    {
+        return position.x;
+    }
+
     public float getSize()
     {
         return SIZE;

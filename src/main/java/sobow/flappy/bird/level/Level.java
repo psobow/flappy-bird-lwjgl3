@@ -135,6 +135,7 @@ public class Level
         bgTexture.bind();
 
         Shader.BG.enable();
+        Shader.BG.setUniform2f("bird", bird.getX(), bird.getY());
         background.bind();
         for (int i = map; i < map + 4; i++)
         {
