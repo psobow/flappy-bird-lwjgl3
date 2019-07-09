@@ -42,6 +42,7 @@ import org.lwjgl.system.MemoryStack;
 import sobow.flappy.bird.graphics.Shader;
 import sobow.flappy.bird.level.Level;
 import sobow.flappy.bird.math.Matrix4f;
+import sobow.flappy.bird.utils.Input;
 
 public class FlappyBirdGame
 {
@@ -161,6 +162,7 @@ public class FlappyBirdGame
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
+
         glEnable(GL_DEPTH_TEST);
 
         glActiveTexture(GL_TEXTURE1);

@@ -2,12 +2,12 @@ package sobow.flappy.bird.level;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
-import sobow.flappy.bird.Input;
 import sobow.flappy.bird.graphics.Shader;
 import sobow.flappy.bird.graphics.Texture;
 import sobow.flappy.bird.graphics.VertexArray;
 import sobow.flappy.bird.math.Matrix4f;
 import sobow.flappy.bird.math.Vector3f;
+import sobow.flappy.bird.utils.Input;
 
 public class Bird
 {
@@ -70,5 +70,15 @@ public class Bird
         texture.bind();
         mesh.render();
         Shader.BIRD.disable();
+    }
+
+    public float getY()
+    {
+        return position.y;
+    }
+
+    public float getSize()
+    {
+        return SIZE;
     }
 }

@@ -1,4 +1,4 @@
-package sobow.flappy.bird;
+package sobow.flappy.bird.utils;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
